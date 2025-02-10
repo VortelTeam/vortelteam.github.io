@@ -1,4 +1,4 @@
-﻿import 'package:doc_proc/doc_section.dart';
+﻿import 'package:vortel_doc_app/doc_section.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 

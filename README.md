@@ -1,4 +1,4 @@
-# doc_proc
+# vortel_doc_app
 
 A new Flutter project.
 

@@ -1,7 +1,7 @@
 // main.dart
-import 'package:doc_proc/employee_table.dart';
-import 'package:doc_proc/doc_section.dart';
-import 'package:doc_proc/theme_data.dart';
+import 'package:vortel_doc_app/employee_table.dart';
+import 'package:vortel_doc_app/doc_section.dart';
+import 'package:vortel_doc_app/theme_data.dart';
 import 'package:flutter/material.dart';
 
 void main() {

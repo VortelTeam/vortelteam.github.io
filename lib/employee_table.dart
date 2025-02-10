@@ -1,7 +1,7 @@
-﻿import 'package:doc_proc/data/employee_repo.dart';
-import 'package:doc_proc/employee_details.dart';
-import 'package:doc_proc/doc_section.dart';
-import 'package:doc_proc/employee_doc_upload.dart';
+﻿import 'package:vortel_doc_app/data/employee_repo.dart';
+import 'package:vortel_doc_app/employee_details.dart';
+import 'package:vortel_doc_app/doc_section.dart';
+import 'package:vortel_doc_app/employee_doc_upload.dart';
 import 'package:flutter/material.dart';
 
 typedef Employee = ({String name, String title});

@@ -1,6 +1,6 @@
 ﻿// employee_documents_screen.dart
 
-import 'package:doc_proc/employee_doc_upload.dart';
+import 'package:vortel_doc_app/employee_doc_upload.dart';
 import 'package:flutter/material.dart';
 
 class DocumentSection extends StatelessWidget {
