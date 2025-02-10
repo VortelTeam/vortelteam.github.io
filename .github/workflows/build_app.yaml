@@ -22,10 +22,6 @@ jobs:
         run: flutter pub get
       - name: Build Web App
         run: flutter build web --release
-      - name: Modify Index HTML
-        run: |
-          cd build/web
-          sed -i 's/<base href="\/">/<base href=".\/">/' index.html
       
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
