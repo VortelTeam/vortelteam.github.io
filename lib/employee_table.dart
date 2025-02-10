@@ -55,11 +55,16 @@ class _EmployeeTableState extends State<EmployeeTable> {
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          showDialog(
+          showGeneralDialog(
             context: context,
-            builder: (context) => AlertDialog(
-              content: DocumentUploadForm(),
-            ),
+            pageBuilder: (context, animation, secondaryAnimation) {
+              return AlertDialog(
+                content: const DocumentUploadForm(),
+              );
+            },
+            transitionDuration: const Duration(milliseconds: 300),
+            barrierDismissible: true,
+            barrierLabel: '',
           );
         },
         child: const Icon(Icons.add),

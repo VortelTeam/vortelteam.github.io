@@ -143,9 +143,11 @@ class _DocumentUploadFormState extends State<DocumentUploadForm> {
     final missingFields = employeeFields.where((f) => f.extractedValue == null).toList();
 
     return Column(
+      spacing: 8,
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        _buildExtractionSummary(extractedFields, missingFields),
         Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
@@ -179,8 +181,6 @@ class _DocumentUploadFormState extends State<DocumentUploadForm> {
             ],
           ),
         ),
-        const SizedBox(height: 16),
-        _buildExtractionSummary(extractedFields, missingFields),
       ],
     );
   }
@@ -328,23 +328,39 @@ class _DocumentUploadFormState extends State<DocumentUploadForm> {
                   child: Text(_currentStep == 0 ? 'Next' : 'Analyze'),
                 ),
               if (_currentStep == 2)
-                ElevatedButton.icon(
-                  icon: const Icon(Icons.save),
-                  label: const Text('Save to Database'),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    foregroundColor: Colors.white,
-                  ),
-                  onPressed: () {
-                    // Show a success snackbar
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Employee data successfully saved to database'),
+                Row(
+                  children: [
+                    TextButton.icon(
+                      icon: const Icon(Icons.download),
+                      label: const Text('Export to Excel'),
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Data exported to Excel file'),
+                            backgroundColor: Colors.blue,
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(width: 8),
+                    ElevatedButton.icon(
+                      icon: const Icon(Icons.save),
+                      label: const Text('Validate and create employee'),
+                      style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.green,
+                        foregroundColor: Colors.white,
                       ),
-                    );
-                    Navigator.pop(context);
-                  },
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Employee data successfully saved to database'),
+                            backgroundColor: Colors.green,
+                          ),
+                        );
+                        Navigator.pop(context);
+                      },
+                    ),
+                  ],
                 ),
             ],
           ),
