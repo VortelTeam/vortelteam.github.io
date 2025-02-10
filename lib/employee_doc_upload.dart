@@ -15,14 +15,56 @@ class DocumentUploadForm extends StatefulWidget {
   State<DocumentUploadForm> createState() => _DocumentUploadFormState();
 }
 
+class EmployeeField {
+  final String name;
+  final String description;
+  final bool isRequired;
+  String? extractedValue;
+  bool? isValid;
+  String? sourceFile;
+
+  EmployeeField({
+    required this.name,
+    required this.description,
+    this.isRequired = true,
+    this.extractedValue,
+    this.isValid,
+    this.sourceFile,
+  });
+}
+
 class _DocumentUploadFormState extends State<DocumentUploadForm> {
   int _currentStep = 0;
   double _analysisProgress = 0.0;
-  final List<String> extractionResults = [
-    'Name: John Doe ✓',
-    'Birth Date: 1990-05-15 ✓',
-    'Document Number: XYZ12345 ✗',
-    'Expiry Date: 2025-12-31 ✓'
+
+  // Replace extractionResults with employeeFields
+  final List<EmployeeField> employeeFields = [
+    EmployeeField(
+        name: 'fullName',
+        description: 'Full Name',
+        extractedValue: 'John Doe',
+        isValid: true,
+        sourceFile: 'Passport.pdf'),
+    EmployeeField(
+        name: 'birthDate',
+        description: 'Date of Birth',
+        extractedValue: '1990-05-15',
+        isValid: true,
+        sourceFile: 'Passport.pdf'),
+    EmployeeField(
+        name: 'documentNumber',
+        description: 'ID Document Number',
+        extractedValue: 'XYZ12345',
+        isValid: false,
+        sourceFile: 'LicenseImage.jpeg'),
+    EmployeeField(
+        name: 'expiryDate',
+        description: 'Document Expiry Date',
+        extractedValue: '2025-12-31',
+        isValid: true,
+        sourceFile: 'Passport.pdf'),
+    EmployeeField(
+        name: 'nationality', description: 'Nationality', extractedValue: null, isValid: null, sourceFile: null),
   ];
 
   final List<UploadedFile> idFiles = [
@@ -97,25 +139,160 @@ class _DocumentUploadFormState extends State<DocumentUploadForm> {
   }
 
   Widget _buildValidationStep() {
+    final extractedFields = employeeFields.where((f) => f.extractedValue != null).toList();
+    final missingFields = employeeFields.where((f) => f.extractedValue == null).toList();
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 16),
-        ...extractionResults.map((result) => Padding(
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              child: Row(
-                children: [
-                  Icon(
-                    result.contains('✓') ? Icons.check_circle : Icons.error,
-                    color: result.contains('✓') ? Colors.green : Colors.red,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(result.replaceAll(RegExp(r' [✓✗]'), '')),
-                ],
+        Container(
+          padding: const EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.grey.shade300),
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Successfully Extracted Fields',
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: Colors.blue.shade700,
+                ),
               ),
-            )),
+              const SizedBox(height: 12),
+              ...extractedFields.map(_buildExtractedField),
+              if (missingFields.isNotEmpty) ...[
+                const Divider(height: 24),
+                Text(
+                  'Missing Fields',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    color: Colors.orange.shade700,
+                  ),
+                ),
+                const SizedBox(height: 12),
+                ...missingFields.map(_buildMissingField),
+              ],
+            ],
+          ),
+        ),
+        const SizedBox(height: 16),
+        _buildExtractionSummary(extractedFields, missingFields),
       ],
+    );
+  }
+
+  Widget _buildExtractedField(EmployeeField field) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Icon(
+                field.isValid == true ? Icons.check_circle : Icons.error,
+                color: field.isValid == true ? Colors.green : Colors.red,
+                size: 20,
+              ),
+              const SizedBox(width: 12),
+              SizedBox(
+                width: 120,
+                child: Text(
+                  field.description,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+              Expanded(
+                child: Text(
+                  field.extractedValue!,
+                  style: TextStyle(
+                    color: field.isValid == true ? Colors.black87 : Colors.red,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 32),
+            child: Text(
+              'Source: ${field.sourceFile}',
+              style: TextStyle(
+                fontSize: 12,
+                color: Colors.grey.shade600,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildMissingField(EmployeeField field) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        children: [
+          const Icon(
+            Icons.warning_amber_rounded,
+            color: Colors.orange,
+            size: 20,
+          ),
+          const SizedBox(width: 12),
+          Text(
+            field.description,
+            style: const TextStyle(
+              color: Colors.grey,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildExtractionSummary(
+    List<EmployeeField> extracted,
+    List<EmployeeField> missing,
+  ) {
+    final validFields = extracted.where((f) => f.isValid == true).length;
+
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.blue.shade50,
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Extraction Summary',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.blue.shade700,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text('• $validFields fields successfully validated'),
+          Text('• ${extracted.length - validFields} fields need review'),
+          Text('• ${missing.length} fields not found in documents'),
+          const SizedBox(height: 12),
+          if (missing.isNotEmpty)
+            Text(
+              'Action Required: Upload additional documents or manually input missing fields.',
+              style: TextStyle(
+                color: Colors.orange.shade700,
+                fontSize: 13,
+              ),
+            ),
+        ],
+      ),
     );
   }
 
@@ -151,9 +328,23 @@ class _DocumentUploadFormState extends State<DocumentUploadForm> {
                   child: Text(_currentStep == 0 ? 'Next' : 'Analyze'),
                 ),
               if (_currentStep == 2)
-                ElevatedButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text('Finish'),
+                ElevatedButton.icon(
+                  icon: const Icon(Icons.save),
+                  label: const Text('Save to Database'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green,
+                    foregroundColor: Colors.white,
+                  ),
+                  onPressed: () {
+                    // Show a success snackbar
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Employee data successfully saved to database'),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                    Navigator.pop(context);
+                  },
                 ),
             ],
           ),
