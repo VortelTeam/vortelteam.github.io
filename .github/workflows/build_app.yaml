@@ -21,7 +21,7 @@ jobs:
       - name: Install Dependencies
         run: flutter pub get
       - name: Build Web App
-        run: flutter build web --web-renderer html --release
+        run: flutter build web --release
       - name: Modify Index HTML
         run: |
           cd build/web
@@ -30,7 +30,7 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          github_token: \${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: ./build/web
           force_orphan: true
