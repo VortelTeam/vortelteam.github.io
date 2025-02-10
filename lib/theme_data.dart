@@ -2,13 +2,10 @@
 
 final themeData = ThemeData(
   colorScheme: ColorScheme.fromSeed(
-    seedColor: const Color(0xFFE8D1D1),
-    primary: const Color(0xFFE8D1D1),
+    seedColor: const Color.fromARGB(255, 158, 132, 132),
   ),
   useMaterial3: true,
-  scaffoldBackgroundColor: const Color(0xFFF5F5F5),
   appBarTheme: const AppBarTheme(
-    backgroundColor: Colors.white,
     elevation: 0,
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(

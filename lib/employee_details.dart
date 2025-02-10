@@ -23,7 +23,6 @@ class EmployeeDetails extends StatelessWidget {
                 employee.title,
                 style: TextStyle(
                   fontSize: 14,
-                  color: Colors.grey,
                 ),
               )
             ],
@@ -47,7 +46,6 @@ class EmployeeDetails extends StatelessWidget {
                         'Phone Number',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.grey[600],
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -82,7 +80,6 @@ class EmployeeDetails extends StatelessWidget {
                         'Street Address',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.grey[600],
                         ),
                       ),
                       TextField(
@@ -115,7 +112,6 @@ class EmployeeDetails extends StatelessWidget {
                         'City',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.grey[600],
                         ),
                       ),
                       const SizedBox(height: 4),
@@ -149,7 +145,6 @@ class EmployeeDetails extends StatelessWidget {
                         'Postal Code',
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
-                          color: Colors.grey[600],
                         ),
                       ),
                       const SizedBox(height: 4),

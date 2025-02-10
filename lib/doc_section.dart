@@ -36,7 +36,6 @@ class DocumentSection extends StatelessWidget {
             const Icon(
               Icons.info_outline,
               size: 16,
-              color: Colors.grey,
             ),
           ],
         ),
@@ -73,7 +72,6 @@ class DocumentSection extends StatelessWidget {
               const Text(
                 'Supported formats: JPEG, PNG, PDF, Word',
                 style: TextStyle(
-                  color: Colors.grey,
                   fontSize: 12,
                 ),
               ),
@@ -118,7 +116,6 @@ class DocumentSection extends StatelessWidget {
         if (files.length >= maxFiles)
           const Text(
             'Max upload limit reached!',
-            style: TextStyle(color: Colors.grey),
           ),
       ],
     );

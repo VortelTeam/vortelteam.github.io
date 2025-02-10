@@ -130,7 +130,6 @@ class _DocumentUploadFormState extends State<DocumentUploadForm> {
         const Text('Analyzing Documents...'),
         LinearProgressIndicator(
           value: _analysisProgress,
-          backgroundColor: Colors.grey[200],
           minHeight: 8,
         ),
         Text('${(_analysisProgress * 100).toStringAsFixed(0)}% Complete'),
@@ -157,14 +156,6 @@ class _DocumentUploadFormState extends State<DocumentUploadForm> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Successfully Extracted Fields',
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: Colors.blue.shade700,
-                ),
-              ),
-              const SizedBox(height: 12),
               ...extractedFields.map(_buildExtractedField),
               if (missingFields.isNotEmpty) ...[
                 const Divider(height: 24),
@@ -224,7 +215,6 @@ class _DocumentUploadFormState extends State<DocumentUploadForm> {
               'Source: ${field.sourceFile}',
               style: TextStyle(
                 fontSize: 12,
-                color: Colors.grey.shade600,
               ),
             ),
           ),
@@ -247,7 +237,6 @@ class _DocumentUploadFormState extends State<DocumentUploadForm> {
           Text(
             field.description,
             style: const TextStyle(
-              color: Colors.grey,
               fontWeight: FontWeight.w500,
             ),
           ),
@@ -271,14 +260,6 @@ class _DocumentUploadFormState extends State<DocumentUploadForm> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Extraction Summary',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.blue.shade700,
-            ),
-          ),
-          const SizedBox(height: 8),
           Text('• $validFields fields successfully validated'),
           Text('• ${extracted.length - validFields} fields need review'),
           Text('• ${missing.length} fields not found in documents'),
@@ -337,7 +318,6 @@ class _DocumentUploadFormState extends State<DocumentUploadForm> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
                             content: Text('Data exported to Excel file'),
-                            backgroundColor: Colors.blue,
                           ),
                         );
                       },
