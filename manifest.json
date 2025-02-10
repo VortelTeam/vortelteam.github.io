@@ -1,6 +1,6 @@
 {
-    "name": "doc_proc",
-    "short_name": "doc_proc",
+    "name": "vortel_doc_app",
+    "short_name": "vortel_doc_app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
