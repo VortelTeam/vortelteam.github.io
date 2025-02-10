@@ -157,18 +157,6 @@ class _DocumentUploadFormState extends State<DocumentUploadForm> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               ...extractedFields.map(_buildExtractedField),
-              if (missingFields.isNotEmpty) ...[
-                const Divider(height: 24),
-                Text(
-                  'Missing Fields',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    color: Colors.orange.shade700,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                ...missingFields.map(_buildMissingField),
-              ],
             ],
           ),
         ),
@@ -264,7 +252,15 @@ class _DocumentUploadFormState extends State<DocumentUploadForm> {
           Text('• ${extracted.length - validFields} fields need review'),
           Text('• ${missing.length} fields not found in documents'),
           const SizedBox(height: 12),
-          if (missing.isNotEmpty)
+          if (missing.isNotEmpty) ...[
+            Text(
+              'Missing Fields',
+              style: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.orange.shade700,
+              ),
+            ),
+            ...missing.map(_buildMissingField),
             Text(
               'Action Required: Upload additional documents or manually input missing fields.',
               style: TextStyle(
@@ -272,6 +268,7 @@ class _DocumentUploadFormState extends State<DocumentUploadForm> {
                 fontSize: 13,
               ),
             ),
+          ],
         ],
       ),
     );
@@ -326,10 +323,6 @@ class _DocumentUploadFormState extends State<DocumentUploadForm> {
                     ElevatedButton.icon(
                       icon: const Icon(Icons.save),
                       label: const Text('Validate and create employee'),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        foregroundColor: Colors.white,
-                      ),
                       onPressed: () {
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
