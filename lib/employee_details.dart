@@ -1,4 +1,4 @@
-﻿import 'package:vortel_doc_app/employee_table.dart';
+﻿import 'package:vortel_doc_app/doc_section.dart';
 import 'package:flutter/material.dart';
 
 class EmployeeDetails extends StatelessWidget {

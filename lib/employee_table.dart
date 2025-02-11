@@ -4,8 +4,6 @@ import 'package:vortel_doc_app/doc_section.dart';
 import 'package:vortel_doc_app/employee_doc_upload.dart';
 import 'package:flutter/material.dart';
 
-typedef Employee = ({String name, String title});
-
 class EmployeeTable extends StatefulWidget {
   const EmployeeTable({super.key});
 
@@ -17,18 +15,25 @@ class _EmployeeTableState extends State<EmployeeTable> {
   late List<(bool, {String name, String title})> _employees;
   Employee? _selectedEmployee;
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  final repo = EmployeeRepo();
+
+  void refresh() {
+    if (!mounted) return;
+    setState(() {
+      _employees = List.generate(
+        repo.employees.length,
+        (index) {
+          final e = repo.employees[index];
+          return (false, name: e.name, title: e.title);
+        },
+      );
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    final employees = EmployeeRepo().getAll();
-    _employees = List.generate(
-      employees.length,
-      (index) {
-        final e = employees[index];
-        return (false, name: e.name, title: e.title);
-      },
-    );
+    refresh();
   }
 
   void _selectEmployee(Employee employee) {
@@ -53,21 +58,33 @@ class _EmployeeTableState extends State<EmployeeTable> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showGeneralDialog(
-            context: context,
-            pageBuilder: (context, animation, secondaryAnimation) {
-              return AlertDialog(
-                content: const DocumentUploadForm(),
+      floatingActionButton: Row(
+        children: [
+          FloatingActionButton(
+            onPressed: () async {
+              await showGeneralDialog(
+                context: context,
+                pageBuilder: (context, animation, secondaryAnimation) {
+                  return AlertDialog(
+                    content: const DocumentUploadForm(),
+                  );
+                },
+                transitionDuration: const Duration(milliseconds: 300),
+                barrierDismissible: true,
+                barrierLabel: '',
               );
+
+              repo.add(Employee('John Doe', 'Consultant'));
+              refresh();
             },
-            transitionDuration: const Duration(milliseconds: 300),
-            barrierDismissible: true,
-            barrierLabel: '',
-          );
-        },
-        child: const Icon(Icons.add),
+            child: const Icon(Icons.add),
+          ),
+          const SizedBox(width: 16),
+          FloatingActionButton(
+            onPressed: () => repo.exportToCsv(),
+            child: const Icon(Icons.download),
+          ),
+        ],
       ),
       key: _scaffoldKey,
       body: Row(
@@ -103,7 +120,7 @@ class _EmployeeTableState extends State<EmployeeTable> {
                 return DataRow(
                   selected: employee.$1,
                   onSelectChanged: (_) => _selectEmployee(
-                    (name: employee.name, title: employee.title),
+                    Employee(employee.name, employee.title),
                   ),
                   cells: [
                     DataCell(Text(employee.name)),
