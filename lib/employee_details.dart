@@ -1,4 +1,4 @@
-﻿import 'package:vortel_doc_app/doc_section.dart';
+﻿import 'package:vortel_doc_app/data/employee_repo.dart';
 import 'package:flutter/material.dart';
 
 class EmployeeDetails extends StatelessWidget {
@@ -51,7 +51,7 @@ class EmployeeDetails extends StatelessWidget {
                       const SizedBox(height: 4),
                       TextField(
                         decoration: InputDecoration(
-                          hintText: '+1',
+                          hintText: employee.phoneNumber,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                             borderSide: const BorderSide(color: Colors.grey),
@@ -84,7 +84,7 @@ class EmployeeDetails extends StatelessWidget {
                       ),
                       TextField(
                         decoration: InputDecoration(
-                          hintText: '2234 Hugin Street',
+                          hintText: employee.streetAddress,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                             borderSide: const BorderSide(color: Colors.grey),
@@ -117,7 +117,7 @@ class EmployeeDetails extends StatelessWidget {
                       const SizedBox(height: 4),
                       TextField(
                         decoration: InputDecoration(
-                          hintText: 'Hamilton',
+                          hintText: employee.city,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                             borderSide: const BorderSide(color: Colors.grey),
@@ -150,7 +150,7 @@ class EmployeeDetails extends StatelessWidget {
                       const SizedBox(height: 4),
                       TextField(
                         decoration: InputDecoration(
-                          hintText: 'A3T 4C7',
+                          hintText: employee.postalCode,
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(8),
                             borderSide: const BorderSide(color: Colors.grey),

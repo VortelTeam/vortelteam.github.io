@@ -1,18 +1,71 @@
-﻿import 'package:vortel_doc_app/doc_section.dart';
+﻿import 'dart:convert';
+
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html;
 import 'package:csv/csv.dart';
 
+class Employee {
+  final String name;
+  final String title;
+  final String phoneNumber;
+  final String streetAddress;
+  final String city;
+  final String postalCode;
+
+  Employee(this.name, this.title, this.phoneNumber, this.streetAddress, this.city, this.postalCode);
+}
+
 class EmployeeRepo {
   final List<Employee> _employees = [
-    Employee('Samuel L. Ement', 'Software Engineer Intern'),
-    Employee('Lurch Schpellchek', 'IT Technician I'),
-    Employee('Eileen Dover', 'Software Engineer'),
-    Employee('Seymour Butz', 'Software Engineer'),
-    Employee('Ivana Tinkle', 'Software Engineer'),
-    Employee('Anita Bath', 'Software Engineer'),
+    Employee(
+      'Samuel L. Ement',
+      'Software Engineer Intern',
+      '(555) 123-4567',
+      '420 Tech Lane',
+      'Austin',
+      '78701',
+    ),
+    Employee(
+      'Lurch Schpellchek',
+      'IT Technician I',
+      '(555) 234-5678',
+      '789 Pine Street',
+      'Seattle',
+      '98101',
+    ),
+    Employee(
+      'Eileen Dover',
+      'Software Engineer',
+      '(555) 345-6789',
+      '567 Pearl Avenue',
+      'Portland',
+      '97201',
+    ),
+    Employee(
+      'Seymour Butz',
+      'Software Engineer',
+      '(555) 456-7890',
+      '901 Mountain View Drive',
+      'Denver',
+      '80202',
+    ),
+    Employee(
+      'Ivana Tinkle',
+      'Software Engineer',
+      '(555) 567-8901',
+      '234 Commonwealth Avenue',
+      'Boston',
+      '02108',
+    ),
+    Employee(
+      'Anita Bath',
+      'Software Engineer',
+      '(555) 678-9012',
+      '456 Market Street',
+      'San Francisco',
+      '94105',
+    ),
   ];
-
   List<Employee> get employees => _employees;
 
   void add(Employee employee) {
@@ -21,32 +74,29 @@ class EmployeeRepo {
 
   void exportToCsv() {
     try {
-      // Convert data to list format
-      List<List<dynamic>> rows = [
-        ['Name', 'Title'], // Header row
-        ...employees.map((employee) => [
-              employee.name,
-              employee.title,
-            ])
-      ];
+      // Convert data to CSV format
+      final csvData = const ListToCsvConverter().convert([
+        ['Name', 'Title'], // Header
+        ...employees.map((e) => [e.name, e.title]) // Data rows
+      ]);
 
-      // Convert to CSV string
-      String csv = const ListToCsvConverter().convert(rows);
+      // Convert CSV string to UTF-8 bytes
+      final bytes = utf8.encode(csvData);
 
-      // Create blob
-      final bytes = csv.codeUnits;
-      final blob = html.Blob([bytes], 'text/csv');
+      // Create blob with CSV MIME type
+      final blob = html.Blob([bytes], 'text/csv; charset=utf-8');
       final url = html.Url.createObjectUrlFromBlob(blob);
 
-      // Create download link
+      // Trigger download
+      final fileName = 'employees_${DateTime.now().millisecondsSinceEpoch}.csv';
       html.AnchorElement(href: url)
-        ..setAttribute("download", "employees_${DateTime.now().millisecondsSinceEpoch}.csv")
-        ..click(); // This triggers the download
+        ..download = fileName
+        ..click();
 
-      // Clean up by revoking URL
+      // Cleanup
       html.Url.revokeObjectUrl(url);
     } catch (e) {
-      throw Exception('Failed to export CSV: \$e');
+      throw Exception('Failed to export CSV: $e');
     }
   }
 }

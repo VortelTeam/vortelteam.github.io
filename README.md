@@ -1,16 +1,20 @@
-# vortel_doc_app
+[Opening] "As a staffing agency, managing identity verification for new hires can be time-consuming. Today, I'll show you how Vortel streamlines this process by automatically extracting and validating candidate information from their documents."
 
-A new Flutter project.
+[Demo] "Let me show you how simple it is:
 
-## Getting Started
+    Start by uploading identity documents - Vortel accepts passports, driver's licenses, and other ID documents in various formats.
+    Behind the scenes, the engine, powered by OCR, document parsing, and Large Language Models extracts the information.
+    The system clearly indicates validated fields, items needing review, and any missing information.
 
-This project is a starting point for a Flutter application.
+[Key Benefits] "Instead of manually typing information from various documents, Vortel:
 
-A few resources to get you started if this is your first Flutter project:
+    Automatically fits the extracted data into your schema
+    Reduces human error in data entry
+    Leverages AI to understand and process documents like a human would
+    Maintains data accuracy with built-in validation
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+[Flexibility] "While we're demonstrating identity verification today, Vortel's powerful combination of OCR and AI makes it adaptable to any structured document type. Tomorrow, you could be:
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+    Processing purchase orders
+    Extracting invoice data
+    Handling shipping documents Simply define your data schema, and Vortel's intelligent engine adapts to extract exactly what you need, in the format you want."
