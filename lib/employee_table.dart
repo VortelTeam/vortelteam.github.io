@@ -73,7 +73,7 @@ class _EmployeeTableState extends State<EmployeeTable> {
                 barrierLabel: '',
               );
 
-              repo.add(Employee('John Doe', 'Consultant', '123-456-7890', '993 Faker street', 'SF', '4D8 ER9'));
+              repo.add(Employee('John Doe', 'Consultant', '123-456-7890', '993 Faker street', 'Austin', '78701'));
               refresh();
             },
             child: const Icon(Icons.add),

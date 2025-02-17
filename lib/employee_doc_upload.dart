@@ -37,48 +37,52 @@ class _DocumentUploadFormState extends State<DocumentUploadForm> {
   int _currentStep = 0;
   double _analysisProgress = 0.0;
 
-  // Replace extractionResults with employeeFields
+  // Updated employeeFields to match Employee class structure
   final List<EmployeeField> employeeFields = [
     EmployeeField(
-        name: 'fullName',
+        name: 'name',
         description: 'Full Name',
         extractedValue: 'John Doe',
         isValid: true,
-        sourceFile: 'Passport.pdf'),
-    EmployeeField(
-        name: 'birthDate',
-        description: 'Date of Birth',
-        extractedValue: '1990-05-15',
-        isValid: true,
-        sourceFile: 'Passport.pdf'),
-    EmployeeField(
-        name: 'documentNumber',
-        description: 'ID Document Number',
-        extractedValue: 'XYZ12345',
-        isValid: false,
         sourceFile: 'LicenseImage.jpeg'),
     EmployeeField(
-        name: 'expiryDate',
-        description: 'Document Expiry Date',
-        extractedValue: '2025-12-31',
+        name: 'title',
+        description: 'Job Title',
+        extractedValue: 'Consultant',
         isValid: true,
-        sourceFile: 'Passport.pdf'),
+        sourceFile: 'AthenaOnboardingFile.pdf'),
     EmployeeField(
-        name: 'nationality', description: 'Nationality', extractedValue: null, isValid: null, sourceFile: null),
+        name: 'phoneNumber',
+        description: 'Phone Number',
+        extractedValue: '123-456-7890',
+        isValid: true,
+        sourceFile: 'AthenaOnboardingFile.pdf'),
+    EmployeeField(
+        name: 'streetAddress',
+        description: 'Street Address',
+        extractedValue: '993 Faker street',
+        isValid: true,
+        sourceFile: 'AthenaOnboardingFile.pdf'),
+    EmployeeField(
+        name: 'city',
+        description: 'City',
+        extractedValue: 'Austin',
+        isValid: true,
+        sourceFile: 'AthenaOnboardingFile.pdf'),
+    EmployeeField(
+        name: 'postalCode',
+        description: 'Postal Code',
+        extractedValue: '78701',
+        isValid: true,
+        sourceFile: 'AthenaOnboardingFile.pdf'),
   ];
 
   final List<UploadedFile> idFiles = [
-    UploadedFile('Passport.pdf'),
+    UploadedFile('AthenaOnboardingFile.pdf'),
     UploadedFile('LicenseImage.jpeg'),
   ];
 
-  final List<UploadedFile> additionalFiles = [
-    UploadedFile('AthenaOnboardingFile.pdf'),
-    UploadedFile('TaxReturn_2025.pdf'),
-    UploadedFile('Medicalfiles_2018.pdf'),
-    UploadedFile('Attendance_Record.csv'),
-  ];
-
+  // Rest of the code remains the same
   void _startAnalysis() {
     setState(() {
       _analysisProgress = 0.0;

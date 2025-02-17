@@ -74,10 +74,19 @@ class EmployeeRepo {
 
   void exportToCsv() {
     try {
-      // Convert data to CSV format
       final csvData = const ListToCsvConverter().convert([
-        ['Name', 'Title'], // Header
-        ...employees.map((e) => [e.name, e.title]) // Data rows
+        // Header row with all fields
+        ['Name', 'Title', 'Phone Number', 'Street Address', 'City', 'Postal Code'],
+
+        // Data rows mapping all fields from each employee
+        ...employees.map((e) => [
+              e.name,
+              e.title,
+              e.phoneNumber,
+              e.streetAddress,
+              e.city,
+              e.postalCode,
+            ])
       ]);
 
       // Convert CSV string to UTF-8 bytes
